@@ -1,3 +1,10 @@
+# Visual Studio 特定文件
 .vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# 编译输出
 bin/
 obj/
