@@ -75,3 +75,4 @@ F:\ebCode\MCPServer\bin\Debug\net8.0\Microsoft.Extensions.Http.dll
 F:\ebCode\MCPServer\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
 F:\ebCode\MCPServer\bin\Debug\net8.0\Microsoft.Net.Http.Headers.dll
 F:\ebCode\MCPServer\bin\Debug\net8.0\Newtonsoft.Json.dll
+F:\ebCode\MCPServer\obj\Debug\net8.0\MCPServer.sourcelink.json

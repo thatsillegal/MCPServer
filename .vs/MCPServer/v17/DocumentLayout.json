@@ -3,6 +3,14 @@
   "WorkspaceRootPath": "F:\\ebCode\\MCPServer\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{81DBFFC8-B936-4D1A-A228-DD12CF51983D}|MCPServer.csproj|f:\\ebcode\\mcpserver\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{81DBFFC8-B936-4D1A-A228-DD12CF51983D}|MCPServer.csproj|solutionrelative:.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{81DBFFC8-B936-4D1A-A228-DD12CF51983D}|MCPServer.csproj|f:\\ebcode\\mcpserver\\.gitignore||{68B46364-D378-42F2-9E72-37D86C5F4468}",
+      "RelativeMoniker": "D:0:0:{81DBFFC8-B936-4D1A-A228-DD12CF51983D}|MCPServer.csproj|solutionrelative:.gitignore||{68B46364-D378-42F2-9E72-37D86C5F4468}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{81DBFFC8-B936-4D1A-A228-DD12CF51983D}|MCPServer.csproj|f:\\ebcode\\mcpserver\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{81DBFFC8-B936-4D1A-A228-DD12CF51983D}|MCPServer.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -18,7 +26,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 50,
-          "SelectedChildIndex": 14,
+          "SelectedChildIndex": 13,
           "Children": [
             {
               "$type": "Bookmark",
@@ -74,7 +82,31 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": ".gitignore",
+              "DocumentMoniker": "F:\\ebCode\\MCPServer\\.gitignore",
+              "RelativeDocumentMoniker": ".gitignore",
+              "ToolTip": "F:\\ebCode\\MCPServer\\.gitignore",
+              "RelativeToolTip": ".gitignore",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAFAAAAAAAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACsSURBVDhPY2SAgsry0vsMDP8VYHxMwPjgzz\u002BGwO7u7gtwof///8PZleUl/3/9\u002BoUTV5aX/G9qqH1fWlpqANfEwMDAhMwhBBISkwV4uTn2IxvCgqoEAk6dOoUuxCAgIMAwfdoUBgYGBgEWJob9DAwMgigKCHkB3TswfSR5ARvAasCpU6ewYrxg1AvkA6wGoDt9cHuBEcaoLC\u002B\u002Bz8DAiCc7I4P/D9o7exUZGBgYALNmGfQiJVocAAAAAElFTkSuQmCC",
+              "WhenOpened": "2025-08-14T08:04:01.601Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 1,
+              "Title": ".gitignore",
+              "DocumentMoniker": "F:\\ebCode\\MCPServer\\.gitignore",
+              "RelativeDocumentMoniker": ".gitignore",
+              "ToolTip": "F:\\ebCode\\MCPServer\\.gitignore",
+              "RelativeToolTip": ".gitignore",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAACsSURBVDhPY2SAgsry0vsMDP8VYHxMwPjgzz\u002BGwO7u7gtwof///8PZleUl/3/9\u002BoUTV5aX/G9qqH1fWlpqANfEwMDAhMwhBBISkwV4uTn2IxvCgqoEAk6dOoUuxCAgIMAwfdoUBgYGBgEWJob9DAwMgigKCHkB3TswfSR5ARvAasCpU6ewYrxg1AvkA6wGoDt9cHuBEcaoLC\u002B\u002Bz8DAiCc7I4P/D9o7exUZGBgYALNmGfQiJVocAAAAAElFTkSuQmCC",
+              "WhenOpened": "2025-08-14T08:03:51.487Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "MonkeyService.cs",
               "DocumentMoniker": "F:\\ebCode\\MCPServer\\MonkeyService.cs",
               "RelativeDocumentMoniker": "MonkeyService.cs",
@@ -82,21 +114,19 @@
               "RelativeToolTip": "MonkeyService.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAwwBsAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-14T03:35:45Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-14T03:35:45Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "F:\\ebCode\\MCPServer\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "F:\\ebCode\\MCPServer\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABDAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-14T02:41:44.151Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-14T02:41:44.151Z"
             }
           ]
         }
