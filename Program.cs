@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using ModelContextProtocol.Server;
 using System.ComponentModel;
+using System.Data.Common;
 using System.Text.Json;
 
 var builder = Host.CreateApplicationBuilder(args);
@@ -56,3 +57,52 @@ public static class MonkeyTools
         return JsonSerializer.Serialize(monkey);
     }
 }
+
+[McpServerToolType]
+public static class ArcTools 
+{
+    [McpServerTool, Description("根据给定排数和跨度生成柱网建模动作")]
+    public static string GenerateColumnGridActions(
+        [Description("柱网横向排数，例如 5")] int row_nums,
+        [Description("柱网纵向排数，例如 4")] int col_nums,
+        [Description("柱网横向总跨度（米）")] double width1,
+        [Description("柱网纵向总跨度（米）")] double width2)
+    {
+        var actions = new List<Dictionary<string, object>>();
+        double dx = (col_nums > 1) ? width1 / (col_nums - 1) : 0;
+        double dy = (row_nums > 1) ? width2 / (row_nums - 1) : 0;
+        double width = 0.4;
+        double depth = 0.4;
+        double height = 3.6;
+
+        for (int i = 0; i < row_nums; i++)
+        {
+            for (int j = 0; j < col_nums; j++)
+            {
+                var action_info = new Dictionary<string, object>
+                {
+                    ["Action"] = "CreateColumn",
+                    ["Parameters"] = new Dictionary<string, double>
+                    {
+                        ["X"] = j * dx,
+                        ["Y"] = i * dy,
+                        ["Width"] = width,
+                        ["Depth"] = depth,
+                        ["Height"] = height
+                    }
+                };
+                actions.Add(action_info);
+            }
+        }
+
+        var result = new Dictionary<string, object>
+        {
+            ["Type"] = "ActionSequence",
+            ["Description"] = $"{row_nums}x{col_nums} 柱网",
+            ["Items"] = actions
+        };
+
+        return JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true });
+    }
+}
+
