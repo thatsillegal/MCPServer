@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using ModelContextProtocol.Server;
 using System.ComponentModel;
 using System.Data.Common;
+using System.Net.Http.Json;
 using System.Text.Json;
 
 var builder = Host.CreateApplicationBuilder(args);
@@ -21,7 +22,7 @@ builder.Services
 
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<MonkeyService>();
-
+builder.Services.AddSingleton<CompileService>();
 
 await builder.Build().RunAsync();
 
@@ -103,6 +104,21 @@ public static class ArcTools
         };
 
         return JsonSerializer.Serialize(result, new JsonSerializerOptions { WriteIndented = true });
+    }
+
+    [McpServerToolType]
+    public static class CommandTools
+    {
+        [McpServerTool, Description("远程编译代码并获取 DLL")]
+        public static async Task<string> GenerateCmd(string sourceCode, IHttpClientFactory httpClientFactory)
+        {
+            var client = httpClientFactory.CreateClient();
+            var payload = new { Code = sourceCode, AssemblyName = "MyGeneratedLib" };
+            var response = await client.PostAsJsonAsync("http://localhost:5000/api/compile", payload);
+
+            var json = await response.Content.ReadAsStringAsync();
+            return json;
+        }
     }
 }
 
