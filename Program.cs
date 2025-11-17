@@ -6,6 +6,7 @@ using ModelContextProtocol.Server;
 using Scriban;
 using System.ComponentModel;
 using System.Data.Common;
+using System.Dynamic;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -72,60 +73,80 @@ public static class CmdGenataionTools
             var paramList = new List<string>();
             foreach (var p in parameters.EnumerateObject()) // 历一个 JSON 对象的 所有 key-value 对
             {
-                var val = p.Value.ValueKind switch // p.Value.ValueKind 是 JsonElement 提供的一个属性，用来告诉当前 JSON 值的类型
-                {
-                    JsonValueKind.Number => p.Value.GetDouble().ToString(),
-                    JsonValueKind.String => $"\"{p.Value.GetString()}\"",
-                    JsonValueKind.True => "true",
-                    JsonValueKind.False => "false",
-                    _ => p.Value.ToString() // 其它类型（数组、对象等） → 直接 ToString()
-                };
-
-                paramList.Add($"{p.Name}: {val}");
+                paramList.Add($"{p.Name}: {p.Value}");
             }
             string argumentString = string.Join(", ", paramList);
-            string finalCall = $"{actionName}({argumentString})";
+            string finalCall = $"McpActions.{actionName}({argumentString});";
             _executingCode.Add(finalCall);
         }
 
+        var executing_texts = string.Join("\n", _executingCode);
+
+        // Scriban 的控制语句（statement）必须处于一行的最开头（不能被空格缩进），否则解析不到
         string templateText = @"
-        public class ""{{ cmd_name }}"" : IExternalCmd
-        {
-            public string Describe() => ""{{ description }}"";
-            public string Name() => ""{{ description }}"";
+using DBARC;
+using ArchDe_EB;
+using DBArcFunc;
+using DBSTR;
+using EB3D;
+using EB3DDB;
+using EB3DFunction;
+using EBCore;
+using EBDemo;
+using EBPlugIn;
+using FamilyEditor;
+using GeoAlgo;
+using GuiDB;
+using GuiFunction;
+using GuiMath;
+using GuiStructural;
+using System;
 
-            public Result Execute(EBDB EbDb)
+public class {{ cmd_name }} : IExternalCmd
+{
+    public string Describe() { return ""{{ description }}"";}
+    public string Name() { return ""{{ description }}"";}
+
+    public Result Execute(EBDB EbDb)
+    {
+        try{
+            // 确认当前视图为2D视图
+            string msg = """";
+            var CurView = EbDb.ActivView2D?.GView;
+            if (CurView == null)
             {
-                // 确认当前视图为2D视图
-                if (EbDb.ActivView2D == null)
-                {
-                    EbDb.UIGuideDialog(""提示"", new List<string>() { ""请先激活二维视图!"" }, new List<string>() { ""确定"" }, true);
-                    return Result.Failed;
-                }
-
-                // 执行逻辑
-                using (new Transaction(""{{ description }}""))
-                {
-                    {{ for line in executingCode }}
-                    {{ line }}
-                    {{ end }}
-                }
-
-                return Result.Succeeded;
+                msg = ""没找到2D视图"";
+                throw new Exception(msg);
             }
+
+            // 执行逻辑
+            using (new Transaction(""{{ description }}""))
+            {
+                {{executing_texts}}
+            }
+
+            return Result.Succeeded;
         }
-        ";
+        catch (Exception ex)
+        {
+            EBMessageBox.Show(""插件运行错误:"" + ex.Message);
+            return Result.Failed;
+        }
+    }
+}
+";
+
         var data = new
         {
             description = _description,
-            executingCode = _executingCode,
+            executing_texts,
             cmd_name = _cmd_name
         };
         var template = Template.Parse(templateText);
         string resultCode = template.Render(data);
 
         var client = httpClientFactory.CreateClient();
-        var payload = new { Code = resultCode, AssemblyName = "MyGeneratedLib" };
+        var payload = new { Code = resultCode, AssemblyName = "AiGenCmd" };
         var response = await client.PostAsJsonAsync("https://localhost:44355/api/compile", payload);
         var json = await response.Content.ReadAsStringAsync();
         return json;
@@ -135,17 +156,17 @@ public static class CmdGenataionTools
     public static async Task<string> GenerateColumnGridActions(
         [Description("柱网横向排数，例如 5")] int row_nums,
         [Description("柱网纵向排数，例如 4")] int col_nums,
-        [Description("柱网横向总跨度（米）")] double width1,
-        [Description("柱网纵向总跨度（米）")] double width2,
+        [Description("柱网横向总跨度（毫米）")] double width1,
+        [Description("柱网纵向总跨度（毫米）")] double width2,
         IHttpClientFactory httpClientFactory,
         CancellationToken cancellationToken)
     {
         var actions = new List<Dictionary<string, object>>();
         double dx = (col_nums > 1) ? width1 / (col_nums - 1) : 0;
         double dy = (row_nums > 1) ? width2 / (row_nums - 1) : 0;
-        double width = 0.4;
-        double depth = 0.4;
-        double height = 3.6;
+        double width = 500;
+        double depth = 500;
+        double height = 3000;
 
         for (int i = 0; i < row_nums; i++)
         {
@@ -154,13 +175,14 @@ public static class CmdGenataionTools
                 var action_info = new Dictionary<string, object>
                 {
                     ["FunctionName"] = "CreateColumn",
-                    ["Parameters"] = new Dictionary<string, double>
+                    ["Parameters"] = new Dictionary<string, object>
                     {
-                        ["X"] = j * dx,
-                        ["Y"] = i * dy,
+                        ["X"] = (j * dx),
+                        ["Y"] = (i * dy),
                         ["Width"] = width,
                         ["Depth"] = depth,
-                        ["Height"] = height
+                        ["Height"] = height,
+                        ["CurView"] = "CurView"
                     }
                 };
                 actions.Add(action_info);
